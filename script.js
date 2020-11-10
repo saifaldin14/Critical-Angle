@@ -7,42 +7,42 @@ let img = new Image();
 img.src = './assets/bg.jpg';
 
 function setup() {
-    canvas.height = window.innerHeight - 200;
-    canvas.width = window.innerWidth - 600;
-    c.translate(canvas.width - 90, canvas.height - 100);
-    // var background = new Image();
-    // background.src = "https://onthego.com.sg/wp-content/uploads/2017/08/tablet-bg.jpg";
-
-    // background.onload = () => {
-    //     c.drawImage(background,canvas.width - 90, canvas.height - 100, 0, 0);
-    // }
+    canvas.height = 625;
+    canvas.width = 625;
 }
 setup();
 
 img.addEventListener("load", () => {
     c.save()
     c.globalCompositeOperation='destination-over'
-    c.drawImage(img, -800, -1000, window.innerWidth, window.innerHeight + 100);
+    c.drawImage(img, 0, 0, 600, 600);
     c.restore();
 })
 
 const drawImage = () => {
     c.save()
     c.globalCompositeOperation='destination-over'
-    c.drawImage(img, -800, -1000, window.innerWidth, window.innerHeight + 100);
+    c.drawImage(img, 0, 0, 600, 600);
     c.restore();
 }
 drawImage();
 
 
-// drawing the ramp
 const drawRamp = (angle) => {
+    angle = (angle + 1) % 360;
+
     c.save();
-    c.beginPath();
+    c.translate(570, 570);
     c.rotate(angle * Math.PI / 180);
-    c.moveTo(-750, 0);
+    c.translate(-570, -570);
+
+    c.beginPath();
+    //c.moveTo(-750, 0);
+    c.moveTo(570, 570);
     c.lineWidth = 20;
-    c.lineTo(0, 0);
+    //c.lineTo(0, 0);
+    c.lineTo(50, 570);
+    c.translate(0, 570);
     c.strokeStyle=pat;
     c.stroke();
     c.restore();
@@ -52,9 +52,9 @@ function drawBase() {
     c.save()
     c.beginPath();
     c.rotate(0 * Math.PI / 180);
-    c.moveTo(-600, 0);
+    c.moveTo(570, 570);
     c.lineWidth = 30;
-    c.lineTo(0, 0);
+    c.lineTo(50, 570);
     c.strokeStyle=pat;
     c.stroke();
     c.restore();
@@ -77,8 +77,9 @@ function genRand(min, max, decimalPlaces) {
     return Math.floor(rand*power) / power;
 }
 
-var currX = -730; // set the initial X pos of the rectangle
-var currY = -58; // set the initial Y pos of the rectangle
+//var currX = -730;
+var currX = 90;
+var currY = 507;
 
 var criticalAngle = genRand(19.5, 20.5, 1);
 var currAngle = 0;
@@ -105,8 +106,13 @@ function setTheta2() {
 
 const rectangle = (posX, posY, angle) => {
     c.save();
-    c.beginPath();
+
+    c.save();
+    c.translate(570, 570);
     c.rotate(angle * Math.PI / 180);
+    c.translate(-570, -570);
+
+    c.beginPath();
     c.fillStyle = "#668cff";
     c.fillRect(posX, posY, 80, 50);
     c.fillStyle = "white";
@@ -119,10 +125,10 @@ const rectangle = (posX, posY, angle) => {
 }
 
 function downwardStart() {
-    currX = -730; // set the initial X pos of the rectangle
-    currY = -58; // set the initial Y pos of the rectangle
+    currX = 90;
+    currY = 507;
 
-    c.clearRect(55, 0, -1500, -790);
+    c.clearRect(0, 0, 700, 700);
     //const currAngle = 45;
     drawRamp(currAngle);
     drawBase();
@@ -137,7 +143,7 @@ function startAnim() {
     var thetaLabel = document.getElementById('thetaLabel');
     currAngle = newAngle;
 
-    c.clearRect(100, 100, -1500, -790);
+    c.clearRect(0, 0, 700, 700);
     drawRamp(currAngle);
     drawBase();
     drawImage();
@@ -153,19 +159,19 @@ function startAnim() {
 
 function downRamp() {
     if (activeDown) {
-        c.clearRect(100, 100, -1500, -790);
+        c.clearRect(0, 0, 700, 700);
         drawImage();
         drawBase();
         drawRamp(currAngle);
         currX += 5;
         console.log(currX);
-        if (currX < -80) {
+        if (currX < 470) {
             rectangle(currX, currY, currAngle);
             drawImage();
         }
         else {
-            currX = -80
-            rectangle(currX, -58, currAngle);
+            currX = 470
+            rectangle(currX, 507, currAngle);
             activeDown = false;
         }
         requestAnimationFrame(downRamp);
@@ -176,13 +182,14 @@ function resetPosition() {
     activeDown = false;
     currAngle = 0;
     thetaLabel.innerHTML = currAngle.toFixed(2);
-    currY = -58;
-    currX = -730;
+    currY = 507;
+    currX = 90;
 
-    c.clearRect(55, 0, -1500, -790);
+    c.clearRect(0, 0, 700, 700);
     drawImage();
     drawRamp(currAngle);
     rectangle(currX, currY, currAngle);
+    drawBase();
     document.getElementById('add_theta').value = '';
 }
 
