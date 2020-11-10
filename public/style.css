@@ -1,0 +1,62 @@
+.asset {
+  width: 7rem;
+}
+.navbar {
+  background-color: black;
+}
+
+.container {
+  padding: 2rem;
+}
+.blue {
+  font-weight: 700;
+  /* color: #007bff; */
+}
+
+.settings {
+  margin-top: 2rem;
+}
+label {
+  font-size: large;
+  font-weight: 500;
+}
+
+#wood {
+  display: none;
+}
+#wood2 {
+  display: none;
+}
+
+
+#submit_button {
+  margin: 1rem;
+}
+
+#submit_button1 {
+  margin: 1rem;
+}
+#submit_button2 {
+  margin: 1rem;
+}
+
+#full-display {
+  display: flex;
+  flex-direction: row;
+}
+
+#input-div {
+  width: 50%;
+}
+/*
+#direction-buttons {
+  display: flex;
+  flex-direction: row;
+}
+
+#canvas-style {
+  background-image:    url(/assets/backGround.jpg);
+  background-size:     cover;
+  background-repeat:   no-repeat;
+  background-position: center center;
+}
